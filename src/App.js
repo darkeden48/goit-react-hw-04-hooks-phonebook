@@ -34,7 +34,6 @@ export default function App() {
     setContacts(contacts.filter((contact) => contact.id !== id));
   };
 
-  // const { contacts, filter } = this.state;
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(filter)
   );
@@ -42,8 +41,8 @@ export default function App() {
   useEffect(() => {
     const data = window.localStorage.getItem("contacts");
     const localData = JSON.parse(data);
-    console.log(localData);
-    setContacts(localData);
+    const addContact = localData || contacts;
+    setContacts(addContact);
   }, []);
 
   useEffect(() => {
