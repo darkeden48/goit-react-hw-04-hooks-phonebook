@@ -1,8 +1,25 @@
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
 import Form from "./components/Form/Form";
 import Contacts from "./components/Contacts/Contacts";
 import Filter from "./components/Filter/Filter";
 import { nanoid } from "nanoid";
+
+type Cont ={
+id:string;
+name:string;
+number:string;
+}
+
+// interface AppProps{
+// onSubmit:(name:string, number:string)=>FormEventHandler<HTMLFormElement>;
+// }
+
+interface AppState{
+  contacts:Cont
+  filter:string;
+}
+
+
 
 export default function App() {
   const [contacts, setContacts] = useState([
@@ -13,7 +30,7 @@ export default function App() {
   ]);
   const [filter, setFilter] = useState("");
 
-  const formSubmit = (name, number) => {
+  const formSubmit = (name:string, number:string) => {
     const contact = {
       id: nanoid(),
       name,
@@ -26,11 +43,11 @@ export default function App() {
     setContacts((prevContacts) => [...prevContacts, contact]);
   };
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange:React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setFilter(e.currentTarget.value);
   };
 
-  const deleteContact = (id) => {
+  const deleteContact = (id:string) => {
     setContacts(contacts.filter((contact) => contact.id !== id));
   };
 
@@ -39,7 +56,7 @@ export default function App() {
   );
 
   useEffect(() => {
-    const data = window.localStorage.getItem("contacts");
+    const data = window.localStorage.getItem("contacts")||'';
     const localData = JSON.parse(data);
     const addContact = localData || contacts;
     setContacts(addContact);

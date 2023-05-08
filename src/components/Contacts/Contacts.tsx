@@ -1,7 +1,19 @@
+import React from "react";
 import propTypes from "prop-types";
 import c from "./Contacts.module.css";
 
-function Contacts({ contacts, deleteContact }) {
+type Cont ={
+  id:string;
+  name:string;
+  number:string;
+  }
+
+interface ContactsProps{
+  contacts:Cont[];
+  deleteContact:(id:string)=>void;
+}
+
+function Contacts({ contacts, deleteContact }:ContactsProps) {
   return (
     <ul className={c.contacts_list}>
       {contacts.map(({ name, number, id }) => (

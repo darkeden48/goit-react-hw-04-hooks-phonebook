@@ -1,15 +1,23 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import form from "./Form.module.css";
 import { nanoid } from "nanoid";
 
-export default function Form({ onSubmit }) {
+interface FormProps{
+  onSubmit:(name:string,number:string)=>void;
+};
+// interface FormState{
+//   name:string;
+//   number:string;
+// }
+
+export default function Form({ onSubmit }:FormProps) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
   const nameId = nanoid();
   const numberId = nanoid();
 
-  const handleChange = (event) => {
+  const handleChange:React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name, value } = event.target;
     // setName({ [event.currentTarget.name]: event.currentTarget.value });
     switch (name) {
@@ -24,13 +32,13 @@ export default function Form({ onSubmit }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit:React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     onSubmit(name, number);
     reset();
   };
 
-  const reset = (e) => {
+  const reset = () => {
     setName("");
     setNumber("");
   };
